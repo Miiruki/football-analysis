@@ -30,4 +30,4 @@ def match_details(match_id):
     return render_template('match_details.html', match_details=match_details)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,host='0.0.0.0')
