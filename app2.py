@@ -17,13 +17,16 @@ def index():
         return render_template('index.html', matches=matches)
     return render_template('index.html')
 
-@app.route('/match_details/<match_id>')
-def match_details(match_id):
+def fetch_match_details_from_api(match_id):
     api_key = '0e155f34c82d16819a3538a0bdf9b39cdb1f0ec35df0ce5f29d9663943518d7b'  # Remplacez par votre clé API
     url = f"https://apiv3.apifootball.com/?action=get_events&match_id={match_id}&APIkey={api_key}"
     response = requests.get(url)
     match_details = response.json()
+    return match_details
 
+@app.route('/match_details/<match_id>')
+def match_details(match_id):
+    match_details = fetch_match_details_from_api(match_id)  # Récupère les détails du match depuis une API
     return render_template('match_details.html', match_details=match_details)
 
 if __name__ == '__main__':
