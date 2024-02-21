@@ -18,7 +18,7 @@ def get_league_standings(league_id, api_key):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    standings = {}  # Initialize standings dictionary
+    standings = {}  
 
     if request.method == 'POST':
         date = request.form['date']
