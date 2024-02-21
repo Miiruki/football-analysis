@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff; /* Bleu clair */
+    color: #000080; /* Bleu foncé */
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    color: #4169e1; /* Bleu royal */
+    text-align: center;
+}
+
+form {
+    margin: 20px auto;
+    width: 50%;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #4169e1; /* Bleu royal */
+}
+
+input[type="date"],
+select {
+    padding: 8px;
+    border: 1px solid #4169e1; /* Bleu royal */
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    background-color: #4682b4; /* Acier bleu */
+    color: #fff; /* Blanc */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #4169e1; /* Bleu royal */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+li::before {
+    content: "⚽️"; /* Ajoutez un emoji de ballon de football avant chaque élément de liste */
+    margin-right: 5px;
+}

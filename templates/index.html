@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Résultats des matchs de football</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Lien vers votre fichier CSS -->
 </head>
 <body>
     <h1>Résultats des matchs de football</h1>
     <form action="/" method="post">
-        <label for="date">Date (YYYY-MM-DD):</label>
-        <input type="text" id="date" name="date" required>
-        <label for="league_id">ID de la ligue:</label>
-        <input type="text" id="league_id" name="league_id" required>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <label for="league">Ligue:</label>
+        <select id="league" name="league" required>
+            <option value="168">Ligue 1</option>
+            <option value="302">La Liga</option>
+            <option value="152">Premier League</option>
+            <option value="175">Bundesliga</option>
+            <option value="207">Serie A</option>
+        </select>
         <button type="submit">Rechercher</button>
     </form>
     {% if message %}
@@ -20,9 +27,19 @@
     {% if matches %}
         <ul>
             {% for match in matches %}
-                <li>{{ match.match_hometeam_name }} {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }} {{ match.match_awayteam_name }}</li>
+                <li data-match-id="{{ match.match_id }}">{{ match.match_hometeam_name }} {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }} {{ match.match_awayteam_name }}</li>
             {% endfor %}
         </ul>
     {% endif %}
+
+    <script>
+        const matchItems = document.querySelectorAll('li[data-match-id]');
+        matchItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const matchId = item.getAttribute('data-match-id');
+                window.location.href = `/match_details/${matchId}`;
+            });
+        });
+    </script>
 </body>
 </html>
