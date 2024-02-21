@@ -1,4 +1,4 @@
-name: Python CI
+name: footballAPP
 
 on:
   push:
@@ -7,36 +7,30 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Install curl
+      run: sudo apt update && sudo apt install -y curl
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+    - name: Build docker
+      run: docker build -t fotballapp .
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+    - name: Run docker
+      run: docker run -d -p 8080:5000 fotballapp
 
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Wait for docker to start
+      run: sleep 10
 
-    - name: Test with pytest
-      run: |
-        pytest
+    - name: Test connection to docker
+      run: curl http://127.0.0.1:8080
 
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage-report
-        path: coverage.xml
+    # - name: Connect to dockerhub
+    #   run: echo "$DOCKERPASSWORD" | docker login -u miiruki --password-stdin
+
+    # - name: Upload image to dockerhub
+    #   run: docker tag fa_nodejs_sample "miiruki/fa_nodejs_sample" && docker push "miiruki/fa_nodejs_sample"
