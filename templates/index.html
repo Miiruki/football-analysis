@@ -34,6 +34,16 @@
         </ul>
     {% endif %}
 
+    <script>
+        const matchItems = document.querySelectorAll('li[data-match-id]');
+        matchItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const matchId = item.getAttribute('data-match-id');
+                window.location.href = `/match_details/${matchId}`;
+            });
+        });
+    </script>
+    
     <h1>Classements des ligues</h1>
 
     <div class="container">
