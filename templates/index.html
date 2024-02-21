@@ -21,9 +21,11 @@
         </select>
         <button type="submit">Rechercher</button>
     </form>
+
     {% if message %}
         <p>{{ message }}</p>
     {% endif %}
+
     {% if matches %}
         <ul>
             {% for match in matches %}
@@ -32,14 +34,32 @@
         </ul>
     {% endif %}
 
-    <script>
-        const matchItems = document.querySelectorAll('li[data-match-id]');
-        matchItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const matchId = item.getAttribute('data-match-id');
-                window.location.href = `/match_details/${matchId}`;
-            });
-        });
-    </script>
+    <h1>Classements des ligues</h1>
+
+    <div class="container">
+        {% for league_id, league_standings in standings.items() %}
+            <div class="league">
+                <h2>{{ league_standings[0]['league_name'] }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Équipe</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for team in league_standings %}
+                            <tr>
+                                <td>{{ team['overall_league_position'] }}</td>
+                                <td>{{ team['team_name'] }}</td>
+                                <td>{{ team['overall_league_PTS'] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 </html>

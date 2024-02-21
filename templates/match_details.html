@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du match</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Lien vers votre fichier CSS -->
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
     <h1>Détails du match</h1>
-    
-    <!-- Affichage des informations générales sur le match -->
+
     {% for match in match_details %}
     <h2>Informations générales</h2>
     <p>Pays: {{ match.country_name }}</p>
@@ -19,7 +18,7 @@
     <p>Stade: {{ match.match_stadium }}</p>
     <p>Arbitre: {{ match.match_referee }}</p>
     
-    <!-- Affichage du score et des buteurs -->
+  
     <h2>Score</h2>
     <p>Résultat final: {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }}</p>
     <ul>
@@ -28,7 +27,7 @@
         {% endfor %}
     </ul>
     
-    <!-- Affichage des cartons -->
+    
     <h2>Cartons</h2>
     <ul>
         {% for card in match.cards %}
@@ -36,7 +35,7 @@
         {% endfor %}
     </ul>
     
-    <!-- Affichage des remplacements -->
+   
     <h2>Remplacements</h2>
     <h3>Équipe à domicile</h3>
     <ul>
@@ -51,7 +50,6 @@
         {% endfor %}
     </ul>
     
-    <!-- Affichage des compositions d'équipe -->
     <h2>Compositions d'équipe</h2>
     <h3>Équipe à domicile</h3>
     <ul>
