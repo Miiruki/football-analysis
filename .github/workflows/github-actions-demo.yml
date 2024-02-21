@@ -18,10 +18,10 @@ jobs:
       run: sudo apt update && sudo apt install -y curl
 
     - name: Build docker
-      run: docker build -t fotballapp .
+      run: docker build -t footballanalysis .
 
     - name: Run docker
-      run: docker run -d -p 8080:5000 fotballapp
+      run: docker run -d -p 8080:5000 footballanalysis
 
     - name: Wait for docker to start
       run: sleep 10
@@ -29,8 +29,8 @@ jobs:
     - name: Test connection to docker
       run: curl http://127.0.0.1:8080
 
-    # - name: Connect to dockerhub
-    #   run: echo "$DOCKERPASSWORD" | docker login -u miiruki --password-stdin
+    - name: Connect to dockerhub
+      run: echo "${{secrets.DOCKERPASSWORD}}" | docker login -u miiruki --password-stdin
 
-    # - name: Upload image to dockerhub
-    #   run: docker tag fa_nodejs_sample "miiruki/fa_nodejs_sample" && docker push "miiruki/fa_nodejs_sample"
+    - name: Upload image to dockerhub
+      run: docker tag footballanalysis "miiruki/footballanalysis" && docker push "miiruki/footballanalysis"
