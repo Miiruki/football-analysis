@@ -41,5 +41,5 @@ jobs:
           DOCKER_TAG="footballanalysis-${{ github.sha }}-main"
         fi
         docker tag footballanalysis "${DOCKER_TAG}"
-        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u miiruki --password-stdin
+        docker login -u miiruki -p ${{ secrets.DOCKERPASSWORD }}
         docker push "${DOCKER_TAG}"
