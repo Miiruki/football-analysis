@@ -40,6 +40,7 @@ jobs:
         else
           DOCKER_TAG="footballanalysis-${{ github.sha }}-main"
         fi
+        
         sudo docker login -u miiruki -p ${{ secrets.DOCKERPASSWORD }}
         sudo docker tag footballanalysis "${DOCKER_TAG}"
         sudo docker push "${DOCKER_TAG}"
