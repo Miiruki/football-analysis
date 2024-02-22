@@ -2,9 +2,13 @@ name: footballAPP
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  release:
+    types: [created]
 
 jobs:
   test:
@@ -29,8 +33,14 @@ jobs:
     - name: Test connection to docker
       run: curl http://127.0.0.1:8080
 
-    - name: Connect to dockerhub
-      run: echo "${{secrets.DOCKERPASSWORD}}" | docker login -u miiruki --password-stdin
+    - name: Set image tag
+      run: |
+        if [ "${{ github.event_name }}" == "release" ]; then
+          DOCKER_TAG="footballanalysis.${{ github.event.release.tag_name }}"
+        else
+          DOCKER_TAG="footballanalysis-${{ github.sha }}-main"
+        fi
 
-    - name: Upload image to dockerhub
-      run: docker tag footballanalysis "miiruki/footballanalysis" && docker push "miiruki/footballanalysis"
+        sudo docker login -u miiruki -p ${{ secrets.DOCKERPASSWORD }}
+        sudo docker tag footballanalysis "miiruki/${DOCKER_TAG}"
+        sudo docker push "miiruki/${DOCKER_TAG}"

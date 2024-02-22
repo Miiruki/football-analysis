@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du match</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Lien vers votre fichier CSS -->
+    <link rel="stylesheet" href="styles.css"> 
 </head>
 <body>
-    <h1>Détails du match</h1>
-    
-    <!-- Affichage des informations générales sur le match -->
+    <h1>Détails du match  </h1>  
+
     {% for match in match_details %}
+    <h1> {{ match.match_hometeam_name }} {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }} {{ match.match_awayteam_name }}</h1>
+
     <h2>Informations générales</h2>
     <p>Pays: {{ match.country_name }}</p>
     <p>Ligue: {{ match.league_name }}</p>
@@ -19,39 +20,16 @@
     <p>Stade: {{ match.match_stadium }}</p>
     <p>Arbitre: {{ match.match_referee }}</p>
     
-    <!-- Affichage du score et des buteurs -->
+  
     <h2>Score</h2>
-    <p>Résultat final: {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }}</p>
+    <p>Résultat final: {{ match.match_hometeam_name }} {{ match.match_hometeam_score }} - {{ match.match_awayteam_score }} {{ match.match_awayteam_name }}</p>
     <ul>
         {% for goal in match.goalscorer %}
             <li>{{ goal.score_info_time }}: {{ goal.home_scorer }} {{ goal.home_assist }} - {{ goal.away_scorer }} {{ goal.away_assist }}</li>
         {% endfor %}
     </ul>
     
-    <!-- Affichage des cartons -->
-    <h2>Cartons</h2>
-    <ul>
-        {% for card in match.cards %}
-            <li>{{ card.score_info_time }}: {% if card.home_fault %}{{ card.home_fault }} ({{ card.card }}){% endif %}{% if card.away_fault %}{{ card.away_fault }} ({{ card.card }}){% endif %}</li>
-        {% endfor %}
-    </ul>
     
-    <!-- Affichage des remplacements -->
-    <h2>Remplacements</h2>
-    <h3>Équipe à domicile</h3>
-    <ul>
-        {% for substitution in match.substitutions.home %}
-            <li>{{ substitution.time }}': {{ substitution.substitution }}</li>
-        {% endfor %}
-    </ul>
-    <h3>Équipe à l'extérieur</h3>
-    <ul>
-        {% for substitution in match.substitutions.away %}
-            <li>{{ substitution.time }}': {{ substitution.substitution }}</li>
-        {% endfor %}
-    </ul>
-    
-    <!-- Affichage des compositions d'équipe -->
     <h2>Compositions d'équipe</h2>
     <h3>Équipe à domicile</h3>
     <ul>
