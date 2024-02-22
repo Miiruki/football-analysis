@@ -2,7 +2,6 @@ name: footballAPP
 
 on:
   push:
-
     branches:
       - main
   pull_request:
@@ -20,8 +19,7 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Install curl
-
-      run: sudo apt update && sudo apt install -y pip && pip install pytest
+      run: sudo apt update && sudo apt install -y curl
 
     - name: Build docker
       run: docker build -t footballanalysis .
@@ -35,10 +33,13 @@ jobs:
     - name: Test connection to docker
       run: curl http://127.0.0.1:8080
 
-    - name: Set release tag
-      if: github.event_name == 'release'
+    - name: Set image tag
       run: |
-        DOCKER_TAG="footballanalysis.${{ github.event.release.tag_name }}"
+        if [ "${{ github.event_name }}" == "release" ]; then
+          DOCKER_TAG="footballanalysis.${{ github.event.release.tag_name }}"
+        else
+          DOCKER_TAG="footballanalysis-${{ github.sha }}-main"
+        fi
         docker tag footballanalysis "${DOCKER_TAG}"
-        echo "${{secrets.DOCKERPASSWORD}}" | docker login -u miiruki --password-stdin
+        echo "${{ secrets.DOCKERPASSWORD }}" | docker login -u miiruki --password-stdin
         docker push "${DOCKER_TAG}"
